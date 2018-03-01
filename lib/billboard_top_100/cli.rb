@@ -2,9 +2,15 @@ class CLI
 
 	def self.call 
 
-		Scraper.scrape_top_100("https://www.billboard.com/charts/hot-100")
-		input = nil 
+		songs_array = Scraper.scrape_top_100("https://www.billboard.com/charts/hot-100")
 
+		Song.create_from_collection(songs_array)
+
+		binding.pry
+
+		
+
+		input = nil 
 
 		puts "--- Billboard Top 100 Songs As Of #{Time.now.month}/#{Time.now.day}/#{Time.now.year} ---"
 
