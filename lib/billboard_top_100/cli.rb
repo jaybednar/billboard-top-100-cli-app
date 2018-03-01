@@ -2,7 +2,7 @@ class CLI
 
 	def self.call 
 
-		# Scraper.scrape_top_100("https://www.billboard.com/charts/hot-100")
+		Scraper.scrape_top_100("https://www.billboard.com/charts/hot-100")
 		input = nil 
 
 
