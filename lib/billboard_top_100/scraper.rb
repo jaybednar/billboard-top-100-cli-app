@@ -8,10 +8,11 @@ class Scraper
 		doc = Nokogiri::HTML(open(url)).search(".chart-data article.chart-row")
 
 		doc.each do |song|
+			# binding.pry
 			song_hash = Hash.new 
 			song_hash[:current_rank] = song.search(".chart-row__current-week").text         #=> "1"
-			song_hash[:previous_rank]  = song.search(".chart-row__last-week").text.strip          #=> "Last Week: 2"
-			song_hash[:song] =  song.search(".chart-row__song").text
+			song_hash[:previous_rank]  = song.search(".chart-row__last-week").text.split("\n").first         #=> "Last Week: 2"
+			song_hash[:song_name] =  song.search(".chart-row__song").text
 			song_hash[:artist] =  song.search(".chart-row__artist").text.gsub("\n", "")
 			song_hash[:weeks_on_chart] = song.search(".chart-row__weeks-on-chart span.chart-row__value").text
 			song_hash[:peak_rank] = song.search(".chart-row__top-spot span.chart-row__value").text
