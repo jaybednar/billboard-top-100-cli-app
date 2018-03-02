@@ -2,21 +2,42 @@ class CLI
 
 	def self.call 
 
-		songs_array = Scraper.scrape_top_100("https://www.billboard.com/charts/hot-100")
+		top_100 = Scraper.scrape_top_songs("https://www.billboard.com/charts/hot-100")
+		# greatest_top_100 = Scraper.scrape_top_songs("https://www.billboard.com/charts/greatest-hot-100-singles")
+		# mainstream_top_40 = Scraper.scrape_top_songs("https://www.billboard.com/charts/pop-songs")
+		# top_country = Scraper.scrape_top_songs("https://www.billboard.com/charts/country-songs")
+		# top_rock = Scraper.scrape_top_songs("https://www.billboard.com/charts/rock-songs")
+		# top_hip_hop = Scraper.scrape_top_songs("https://www.billboard.com/charts/r-b-hip-hop-songs")
+		# top_dance_elec = Scraper.scrape_top_songs("https://www.billboard.com/charts/dance-electronic-songs")
+		# top_latin = Scraper.scrape_top_songs("https://www.billboard.com/charts/latin-songs")
+		# top_christian = Scraper.scrape_top_songs("https://www.billboard.com/charts/christian-songs")
+		# top_holiday = Scraper.scrape_top_songs("https://www.billboard.com/charts/hot-holiday-songs")
 
-		songs_list = Song.create_from_collection(songs_array)
+
+		songs_list = Song.create_from_collection(top_100)
 
 		input = nil  
 
-		puts "\n\n\n--- Billboard Top 100 Songs As Of #{Time.now.month}/#{Time.now.day}/#{Time.now.year} ---"
+		puts "\n\n\n--- Billboard Top Songs As Of #{Time.now.month}/#{Time.now.day}/#{Time.now.year} ---"
 
 		until input == 'exit' 
 
 			puts "\nMain Menu".colorize(:blue)
 			puts "----------"
-			puts "Enter 'songs' to choose songs"
-			puts "Enter 'artists' to see all Artist in current Top 100"
-			puts "Enter 'exit' to quit the program"
+			# puts "Enter 'songs' to choose songs"
+			# puts "Enter 'artists' to see all Artist in current Top 100"
+			# puts "Enter 'exit' to quit the program"
+			puts "Choose Category:"
+			puts "\n1. Billboard Hot 100"
+			puts "2. Mainstream Top 40"
+			puts "3. Today's Top Country"
+			puts "4. Today's Top Rock"
+			puts "5. Today's Top R&B/Hip-Hop"
+			puts "6. Today's Top Dance/Electronic"
+			puts "7. Today's Top Latin"
+			puts "8. Today's Top Christian/Gospel"
+			puts "9. Greatest Holiday Top 100"
+			puts "10. Greatest All Time Hot 100"
 
 			input = gets.strip.downcase 
 

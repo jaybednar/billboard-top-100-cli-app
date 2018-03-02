@@ -1,7 +1,7 @@
 class Scraper 
 
 
-	def self.scrape_top_100(url)
+	def self.scrape_top_songs(url)
 
 		@all = []
 
