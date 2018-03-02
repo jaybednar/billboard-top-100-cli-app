@@ -6,13 +6,13 @@ class CLI
 
 		songs_list = Song.create_from_collection(songs_array)
 
-		input = nil 
+		input = nil  
 
 		puts "\n\n\n--- Billboard Top 100 Songs As Of #{Time.now.month}/#{Time.now.day}/#{Time.now.year} ---"
 
 		until input == 'exit' 
 
-			puts "\nMain Menu"
+			puts "\nMain Menu".colorize(:blue)
 			puts "----------"
 			puts "Enter 'songs' to choose songs"
 			puts "Enter 'artists' to see all Artist in current Top 100"
@@ -38,9 +38,10 @@ class CLI
 	end 
 
 	def self.get_songs 
+
 		puts "Which songs would you like to see?"
 
-		puts "\n\nEnter 'Top 10' for The Top 10"
+		puts "\n\nEnter '1' for The Top 10"
 		puts "Enter '2' for songs 11 - 20"
 		puts "Enter '3' for songs 21 - 30"
 		puts "Enter '4' for songs 31 - 40"
@@ -55,52 +56,66 @@ class CLI
 		input = gets.strip
 
 		case input 
-		when 'Top 10'
+		when '1'
 			Song.list_by_rank(1..10)
+			self.get_song_details
 		when '2'
 			Song.list_by_rank(11..20)
+			self.get_song_details
 		when '3'
 			Song.list_by_rank(21..30)
+			self.get_song_details
 		when '4'
 			Song.list_by_rank(31..40)
+			self.get_song_details
 		when '5'
-			Song.list_by_rank(41..50) 
+			Song.list_by_rank(41..50)
+			self.get_song_details 
 		when '6'
 			Song.list_by_rank(51..60)
+			self.get_song_details
 		when '7'
 			Song.list_by_rank(61..70)
+			self.get_song_details
 		when '8'
 			Song.list_by_rank(71..80)
+			self.get_song_details
 		when '9'
 			Song.list_by_rank(81..90)
+			self.get_song_details
 		when '10'
 			Song.list_by_rank(91 ..100) 
+			self.get_song_details
 		when 'exit'
 			puts "See you next time!!!"
 			  input = 'exit'
 		when 'menu'
-			input = menu
+			input = 'menu'
 		else
 			puts "Invalid Entry" 
 			input = nil 
 		end 
-		self.get_song_details
+		
 	end 
 
 	def self.get_artists 
 		Song.sort_artists_by_rank
 		self.get_artist_songs
-
 	end 
 
 	def self.get_song_details
 		rank = nil 
-		while rank != 'menu' do 
-			puts "\n\n\nEnter Song Number For More Information Or 'menu' For Main Menu"
+		until rank == 'menu' || rank == 'exit' do 
+			puts "\n\n\nEnter Song Number For More Information"
+			puts "Or Enter 'menu' For Main Menu"
 			rank = gets.strip
 			case rank
 			when 'menu'
+				rank = 'menu'
 				input = 'menu'
+			when 'exit'
+				rank = 'exit'
+				input = 'exit'
 			else 
 				Song.song_details_by_rank(rank)
 			end 
@@ -109,13 +124,17 @@ class CLI
 
 	def self.get_artist_songs
 		rank = nil 
-		while rank != 'menu' do 
+		until rank == 'menu' || rank == 'exit' do 
 			puts "\n\n\nEnter Artist Number to see all songs currently On the Top 100"
 			puts "Or Enter 'menu' For Main Menu"
 			rank = gets.strip
 			case rank
 			when 'menu'
+				rank = 'menu'
 				input = 'menu'
+			when 'exit'
+				rank = 'exit'
+				input = 'exit'
 			else 
 				Song.artist_songs(rank)
 			end 

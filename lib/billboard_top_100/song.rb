@@ -65,20 +65,20 @@ class Song
 
 	def self.song_details_by_rank(rank)
 		song = self.find_by_rank(rank)
-		puts "--- ##{song.current_rank} #{song.song_name} ---"
-		puts "Artist: #{song.artist.name}"
+		puts "\n\n\n--- ##{song.current_rank} #{song.song_name} ---"
+		puts "\nArtist: #{song.artist.name}"
 		puts "Rank This Week: #{song.current_rank}"
 		puts "Rank #{song.previous_rank}"
 		puts "Peak Rank on Chart: #{song.peak_rank}"
 		puts "Weeks On Top 100: #{song.weeks_on_chart}"
-		puts "----------------------------"
+		puts "\n----------------------------"
 	end 
 
 	def self.artist_songs(rank)
 		song = self.find_by_rank(rank)
-		puts "\n\n#{song.artist.name} has #{song.artist.songs.length} Song(s) in the Top 100: "
+		puts "\n#{song.artist.name} has #{song.artist.songs.length} Song(s) in the Top 100: "
 		song.artist.songs.each do |song|
-			puts "\n\n#{song.song_name}" 
+			puts "\n#{song.song_name}" 
 		end 
 	end 
 
