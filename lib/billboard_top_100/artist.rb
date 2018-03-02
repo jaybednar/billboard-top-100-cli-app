@@ -7,6 +7,10 @@ class Artist
 		@@all 
 	end 
 
+	def self.reset!
+		self.all.clear
+	end 
+
 	def initialize(name) 
 		@name = name 
 		@songs = [] 

@@ -54,13 +54,16 @@ class Song
 	end 
 
 	def self.list_by_rank(range)
+		puts ""
+		puts "------------------------------------------------".colorize(:green)
 		songs_in_range = self.all.select{|song| range.include?(song.current_rank.to_i)}
 		self.all.each.with_index(1) do |song, i|
 			if songs_in_range.include?(song)
-				puts "\n\n#{i}. #{song.artist.name} - #{song.song_name}"
+				puts "#{i}. " + "#{song.artist.name}".colorize(:red) + " - " "\"#{song.song_name}\""
 			else 
 			end 
 		end 
+		puts "------------------------------------------------".colorize(:green)
 	end 
 
 	def self.find_by_rank(rank)
@@ -69,22 +72,23 @@ class Song
 
 	def self.song_details_by_rank(rank)
 		song = self.find_by_rank(rank)
-		puts "\n\n\n--- ##{song.current_rank} #{song.song_name} ---"
+		puts "\n\n\n--- ##{song.current_rank} \"#{song.song_name}\" ---".colorize(:green)
 		puts "\nArtist: #{song.artist.name}"
 		puts "Rank This Week: #{song.current_rank}"
 		puts "Rank #{song.previous_rank}"
 		puts "Peak Rank on Chart: #{song.peak_rank}"
 		puts "Weeks On Top 100: #{song.weeks_on_chart}"
-		puts "\n----------------------------"
+		puts "\n----------------------------".colorize(:green)
 		song
 	end 
 
 	def self.artist_songs(rank)
 		song = self.find_by_rank(rank)
-		puts "\n#{song.artist.name} has #{song.artist.songs.length} Song(s) in the #{CLI.category}: "
+		puts "\n#{song.artist.name}".colorize(:green) + " has " + "#{song.artist.songs.length}".colorize(:red) + " Song(s) in the " + "#{CLI.category}:".colorize(:green)
 		song.artist.songs.each do |song|
-			puts "\n#{song.song_name}" 
+			puts "\n\"#{song.song_name}\"".underline + ", which is currently" + " ##{song.current_rank}.".colorize(:green) 
 		end 
+		puts "\n----------------------------\n".colorize(:green)
 	end 
 
 end 
