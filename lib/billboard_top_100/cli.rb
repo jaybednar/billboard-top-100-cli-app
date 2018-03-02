@@ -2,20 +2,6 @@ class CLI
 
 	def self.call 
 
-		# top_100 = Scraper.scrape_top_songs("https://www.billboard.com/charts/hot-100")
-		# greatest_top_100 = Scraper.scrape_top_songs("https://www.billboard.com/charts/greatest-hot-100-singles")
-		# mainstream_top_40 = Scraper.scrape_top_songs("https://www.billboard.com/charts/pop-songs")
-		# top_country = Scraper.scrape_top_songs("https://www.billboard.com/charts/country-songs")
-		# top_rock = Scraper.scrape_top_songs("https://www.billboard.com/charts/rock-songs")
-		# top_hip_hop = Scraper.scrape_top_songs("https://www.billboard.com/charts/r-b-hip-hop-songs")
-		# top_dance_elec = Scraper.scrape_top_songs("https://www.billboard.com/charts/dance-electronic-songs")
-		# top_latin = Scraper.scrape_top_songs("https://www.billboard.com/charts/latin-songs")
-		# top_christian = Scraper.scrape_top_songs("https://www.billboard.com/charts/christian-songs")
-		# top_holiday = Scraper.scrape_top_songs("https://www.billboard.com/charts/hot-holiday-songs")
-
-
-		# songs_list = Song.create_from_collection(songs_array)
-		
 		input = nil  
 
 		puts "\n\n\n--- Billboard Top Songs As Of #{Time.now.month}/#{Time.now.day}/#{Time.now.year} ---"
@@ -29,9 +15,6 @@ class CLI
 
 			puts "\nMain Menu".colorize(:blue)
 			puts "----------"
-			# puts "Enter 'songs' to choose songs"
-			# puts "Enter 'artists' to see all Artist in current Top 100"
-			# puts "Enter 'exit' to quit the program"
 			puts "Choose Category:"
 			puts "\n1. Billboard Hot 100"
 			puts "2. Mainstream Top 40"
@@ -95,81 +78,39 @@ class CLI
 			else 
 				puts "Invalid Entry"
 			end 
-			# songs_list = Song.create_from_collection(songs_array)
-			# self.get_songs
-			# case input 
-			# when 'songs'
-			# 	self.get_songs
-			# when 'artists'
-			# 	self.get_artists
-			# when 'exit'
-			# 	puts "See you next time!!!"
-			# 	input = 'exit'
-			# else 
-			# 	puts "Invalid Entry"
-			# end 
-			
 		end 
 
 	end 
 
 	def self.get_songs 
+		num = (1..Song.all.length).to_a
 
 		puts "Which songs would you like to see?"
-
-		puts "\n\nEnter '1' for The Top 10"
-		puts "Enter '2' for songs 11 - 20"
-		puts "Enter '3' for songs 21 - 30"
-		puts "Enter '4' for songs 31 - 40"
-		puts "Enter '5' for songs 41 - 50"
-		puts "Enter '6' for songs 51 - 60"
-		puts "Enter '7' for songs 61 - 70"
-		puts "Enter '8' for songs 71 - 80"
-		puts "Enter '9' for songs 81 - 90"
-		puts "Enter '10' for songs 91 - 100"
+		i = 0
+		entry = 1
+		while i < Song.all.length do 
+		  puts "Enter '#{entry}' for songs #{num[i, 10].first} - #{num[i, 10].last}"
+		  i += 10 
+		  entry += 1 
+		end 
+		# binding.pry
 		puts "Enter 'exit' to quit the program"
 
 		input = gets.strip
-
-		case input 
-		when '1'
-			Song.list_by_rank(1..10)
-			self.get_song_details
-		when '2'
-			Song.list_by_rank(11..20)
-			self.get_song_details
-		when '3'
-			Song.list_by_rank(21..30)
-			self.get_song_details
-		when '4'
-			Song.list_by_rank(31..40)
-			self.get_song_details
-		when '5'
-			Song.list_by_rank(41..50)
-			self.get_song_details 
-		when '6'
-			Song.list_by_rank(51..60)
-			self.get_song_details
-		when '7'
-			Song.list_by_rank(61..70)
-			self.get_song_details
-		when '8'
-			Song.list_by_rank(71..80)
-			self.get_song_details
-		when '9'
-			Song.list_by_rank(81..90)
-			self.get_song_details
-		when '10'
-			Song.list_by_rank(91 ..100) 
-			self.get_song_details
-		when 'exit'
+		if input.to_i >= entry || input.to_i == 0
+			puts "Invalid Entry"
+			self.get_songs 
+		elsif input == 'exit'
 			puts "See you next time!!!"
 			  input = 'exit'
-		when 'menu'
+		elsif input == 'menu'
 			input = 'menu'
-		else
-			puts "Invalid Entry" 
-			input = nil 
+		else 
+			range_end = input.to_i * 10 - 1
+			range_start = range_end - 9
+			rank_range = (num[range_start]..num[range_end])
+			Song.list_by_rank(rank_range)
+			self.get_song_details
 		end 
 		
 	end 
@@ -185,16 +126,20 @@ class CLI
 			puts "\n\n\nEnter Song Number For More Information"
 			puts "Or Enter 'menu' For Main Menu"
 			rank = gets.strip
-			case rank
-			when 'menu'
+
+			if (1..Song.all.length).include?(rank.to_i) 
+				Song.song_details_by_rank(rank)
+			elsif rank == 'menu'
 				rank = 'menu'
 				input = 'menu'
-			when 'exit'
+			elsif rank == 'exit'
 				rank = 'exit'
 				input = 'exit'
 			else 
-				Song.song_details_by_rank(rank)
+				puts "Invalid Entry"
+				rank = nil 
 			end 
+			
 		end 
 	end 
 
