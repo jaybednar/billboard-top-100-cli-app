@@ -40,9 +40,12 @@ class Song
 		self.find_by_hash(song_hash) || self.create_by_hash(song_hash)
 	end 
 
-	def self.sort_by_rank 
-		self.all.sort do |song_1, song_2|
+	def self.sort_artists_by_rank 
+		sorted_list = self.all.sort do |song_1, song_2|
 			song_1.current_rank.to_i <=> song_2.current_rank.to_i
+		end 
+		sorted_list.each.with_index(1) do |song, i|
+			puts "#{i}. #{song.artist.name}"
 		end 
 	end 
 
@@ -50,7 +53,7 @@ class Song
 		songs_in_range = self.all.select{|song| range.include?(song.current_rank.to_i)}
 		self.all.each.with_index(1) do |song, i|
 			if songs_in_range.include?(song)
-				puts "#{i}. #{song.artist.name} - #{song.song_name}"
+				puts "\n\n#{i}. #{song.artist.name} - #{song.song_name}"
 			else 
 			end 
 		end 
@@ -69,6 +72,14 @@ class Song
 		puts "Peak Rank on Chart: #{song.peak_rank}"
 		puts "Weeks On Top 100: #{song.weeks_on_chart}"
 		puts "----------------------------"
+	end 
+
+	def self.artist_songs(rank)
+		song = self.find_by_rank(rank)
+		puts "\n\n#{song.artist.name} has #{song.artist.songs.length} Song(s) in the Top 100: "
+		song.artist.songs.each do |song|
+			puts "\n\n#{song.song_name}" 
+		end 
 	end 
 
 end 

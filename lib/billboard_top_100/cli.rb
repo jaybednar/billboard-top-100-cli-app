@@ -14,10 +14,24 @@ class CLI
 
 			puts "\nMain Menu"
 			puts "----------"
-			puts "Enter 'Songs' to choose songs"
-			puts "Enter 'Artists' to see all Artist in current Top 100"
+			puts "Enter 'songs' to choose songs"
+			puts "Enter 'artists' to see all Artist in current Top 100"
 			puts "Enter 'exit' to quit the program"
 
+			input = gets.strip.downcase 
+
+
+			case input 
+			when 'songs'
+				self.get_songs
+			when 'artists'
+				self.get_artists
+			when 'exit'
+				puts "See you next time!!!"
+				input = 'exit'
+			else 
+				puts "Invalid Entry"
+			end 
 			
 		end 
 
@@ -43,10 +57,6 @@ class CLI
 		case input 
 		when 'Top 10'
 			Song.list_by_rank(1..10)
-			rank = nil 
-			while rank != 'menu' do 
-				self.get_details
-			end 
 		when '2'
 			Song.list_by_rank(11..20)
 		when '3'
@@ -67,22 +77,49 @@ class CLI
 			Song.list_by_rank(91 ..100) 
 		when 'exit'
 			puts "See you next time!!!"
-			  input == 'exit'
+			  input = 'exit'
+		when 'menu'
+			input = menu
 		else
 			puts "Invalid Entry" 
 			input = nil 
 		end 
+		self.get_song_details
 	end 
 
 	def self.get_artists 
+		Song.sort_artists_by_rank
+		self.get_artist_songs
 
 	end 
 
-	def self.get_details
-		puts "Enter Song Number For More Information Or 'menu' For Main Menu"
-		rank = gets.strip
-		Song.song_details_by_rank(rank)
+	def self.get_song_details
+		rank = nil 
+		while rank != 'menu' do 
+			puts "\n\n\nEnter Song Number For More Information Or 'menu' For Main Menu"
+			rank = gets.strip
+			case rank
+			when 'menu'
+				input = 'menu'
+			else 
+				Song.song_details_by_rank(rank)
+			end 
+		end 
 	end 
 
+	def self.get_artist_songs
+		rank = nil 
+		while rank != 'menu' do 
+			puts "\n\n\nEnter Artist Number to see all songs currently On the Top 100"
+			puts "Or Enter 'menu' For Main Menu"
+			rank = gets.strip
+			case rank
+			when 'menu'
+				input = 'menu'
+			else 
+				Song.artist_songs(rank)
+			end 
+		end 
+	end 
 
 end
