@@ -6,7 +6,7 @@ class Song
 	def self.all 
 		@@all 
 	end 
-	
+
 	def self.reset!
 		self.all.clear
 	end 
@@ -76,11 +76,12 @@ class Song
 		puts "Peak Rank on Chart: #{song.peak_rank}"
 		puts "Weeks On Top 100: #{song.weeks_on_chart}"
 		puts "\n----------------------------"
+		song
 	end 
 
 	def self.artist_songs(rank)
 		song = self.find_by_rank(rank)
-		puts "\n#{song.artist.name} has #{song.artist.songs.length} Song(s) in the Top 100: "
+		puts "\n#{song.artist.name} has #{song.artist.songs.length} Song(s) in the #{CLI.category}: "
 		song.artist.songs.each do |song|
 			puts "\n#{song.song_name}" 
 		end 

@@ -1,4 +1,5 @@
 class CLI 
+	attr_reader :category
 
 	def self.call 
 
@@ -29,55 +30,8 @@ class CLI
 			puts "Enter 'exit' to quit the program"
 
 			input = gets.strip.downcase 
-
-			case input 
-			when '1'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/hot-100")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-			when '2'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/pop-songs")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-			when '3'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/country-songs")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-				# binding.pry
-			when '4'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/rock-songs")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-			when '5'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/r-b-hip-hop-songs")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-			when '6'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/dance-electronic-songs")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-			when '7'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/latin-songs")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-			when '8'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/christian-songs")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-			when '9'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/hot-holiday-songs")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-			when '10'
-				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/greatest-hot-100-singles")
-				songs_list = Song.create_from_collection(songs_array)
-				self.get_songs
-			when 'exit'
-				puts "See you next time!!!"
-				input = 'exit'
-			else 
-				puts "Invalid Entry"
-			end 
+			
+			self.set(input)
 		end 
 
 	end 
@@ -128,7 +82,8 @@ class CLI
 			rank = gets.strip
 
 			if (1..Song.all.length).include?(rank.to_i) 
-				Song.song_details_by_rank(rank)
+				song = Song.song_details_by_rank(rank)
+				self.get_artist_songs(song)
 			elsif rank == 'menu'
 				rank = 'menu'
 				input = 'menu'
@@ -143,23 +98,89 @@ class CLI
 		end 
 	end 
 
-	def self.get_artist_songs
-		rank = nil 
-		until rank == 'menu' || rank == 'exit' do 
-			puts "\n\n\nEnter Artist Number to see all songs currently On the Top 100"
-			puts "Or Enter 'menu' For Main Menu"
-			rank = gets.strip
-			case rank
-			when 'menu'
-				rank = 'menu'
-				input = 'menu'
-			when 'exit'
-				rank = 'exit'
-				input = 'exit'
-			else 
-				Song.artist_songs(rank)
-			end 
+	def self.get_artist_songs(song)
+		puts "\n\n\nEnter 'Y' to see all songs by this Artist currently on this list"
+		puts "Or Enter 'menu' For Main Menu"
+		artist = gets.strip.upcase
+		if artist == 'Y'
+			Song.artist_songs(song.current_rank)
+		elsif artist == 'menu'
+			input = 'menu'
+		elsif artist == 'exit'
+			input = 'exit'
+		else 
+			Song.artist_songs(rank)
 		end 
 	end 
+
+	def self.current_category(category)
+		@category = category
+	end 
+
+	def self.category 
+		@category
+	end 
+
+	def self.set(input)
+		case input 
+			when '1'
+				self.current_category("Billboard Hot 100")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/hot-100")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+			when '2'
+				self.current_category("Mainstream Top 40")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/pop-songs")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+			when '3'
+				self.current_category("Today's Top Country")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/country-songs")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+				# binding.pry
+			when '4'
+				self.current_category("Today's Top Rock")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/rock-songs")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+			when '5'
+				self.current_category("Today's Top R&B/Hip-Hop")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/r-b-hip-hop-songs")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+			when '6'
+				self.current_category("Today's Top Dance/Electronic")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/dance-electronic-songs")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+			when '7'
+				self.current_category("Today's Top Latin")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/latin-songs")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+			when '8'
+				self.current_category("Today's Top Christian/Gospel")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/christian-songs")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+			when '9'
+				self.current_category("Greatest Holiday Top 100")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/hot-holiday-songs")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+			when '10'
+				self.current_category("Greatest All Time Hot 100")
+				songs_array = Scraper.scrape_top_songs("https://www.billboard.com/charts/greatest-hot-100-singles")
+				songs_list = Song.create_from_collection(songs_array)
+				self.get_songs
+			when 'exit'
+				puts "See you next time!!!"
+				input = 'exit'
+			else 
+				puts "Invalid Entry"
+			end 
+	end 
+
 
 end
