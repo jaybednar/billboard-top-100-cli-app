@@ -6,6 +6,10 @@ class Song
 	def self.all 
 		@@all 
 	end 
+	
+	def self.reset!
+		self.all.clear
+	end 
 
 	def initialize(song_name)
 		@song_name = song_name 
