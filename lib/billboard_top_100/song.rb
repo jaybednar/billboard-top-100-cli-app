@@ -56,8 +56,19 @@ class Song
 		end 
 	end 
 
-	def song_details_by_rank(rank)
-		
+	def self.find_by_rank(rank)
+		self.all.detect{|song| song.current_rank == rank}
+	end 
+
+	def self.song_details_by_rank(rank)
+		song = self.find_by_rank(rank)
+		puts "--- ##{song.current_rank} #{song.song_name} ---"
+		puts "Artist: #{song.artist.name}"
+		puts "Rank This Week: #{song.current_rank}"
+		puts "Rank #{song.previous_rank}"
+		puts "Peak Rank on Chart: #{song.peak_rank}"
+		puts "Weeks On Top 100: #{song.weeks_on_chart}"
+		puts "----------------------------"
 	end 
 
 end 
