@@ -79,41 +79,27 @@ class CLI
 
 	def self.get_song_details
 		puts "\nEnter " + "Song Number".colorize(:green) + " For More Information"
-		puts "Enter " + "'back'".colorize(:green) + " For More Songs\n"
-		puts "Enter " + "'menu'".colorize(:green) + "to return to the main menu"
-		puts "Enter " + "'exit'".colorize(:green) + " to quit the program"
+		self.get_input 
 		rank = gets.strip
 
 		if (1..Song.all.length).include?(rank.to_i) 
 			song = Song.song_details_by_rank(rank)
 			Song.artist_songs(song.current_rank)
-		elsif rank == 'menu'
-			self.call 
-		elsif rank == 'back'
-			self.get_songs 
-		elsif rank == 'exit'
-			puts "Have a great day!".colorize(:red)
-			exit
+		elsif rank == 'menu' || rank == 'back' || rank == 'exit'
+			self.handle_input(rank)
 		else 
 			puts "Invalid Entry".colorize(:red)
 			self.get_song_details
 		end 
 
-		puts "Enter " + "'back'".colorize(:green) + " to see more songs in this category"
-		puts "Enter " + "'menu'".colorize(:green) + "to return to the main menu"
-		puts "Enter " + "'exit'".colorize(:green) + " to quit the program"
+		self.get_input 
 		input = gets.strip 
 		
-		if input == 'menu'
-			self.call 
-		elsif input == 'exit'
-			puts "Have a great day!".colorize(:red)
-			exit 
-		elsif input == 'back'
-			self.get_songs
+		if input == 'menu' || input == 'back' || input == 'exit'
+			self.handle_input(input)
 		else 
 			puts "Invalid Entry".colorize(:red)
-			input = nil 
+			self.get_song_details
 		end 
 	end 
 
@@ -204,5 +190,20 @@ class CLI
 		end 
 	end 
 
+	def self.handle_input(input)
+		if input == 'menu'
+			self.call 
+		elsif input == 'back'
+			self.get_songs 
+		elsif input == 'exit'
+			puts "Have a great day!".colorize(:red)
+			exit
+		end 
+	end 
 
+	def self.get_input 
+		puts "Enter " + "'back'".colorize(:green) + " to see more songs in this category"
+		puts "Enter " + "'menu'".colorize(:green) + "to return to the main menu"
+		puts "Enter " + "'exit'".colorize(:green) + " to quit the program"
+	end 
 end
