@@ -1,5 +1,5 @@
 class Song
-	attr_accessor :song_name, :artist, :current_rank, :previous_rank, :peak_rank, :weeks_on_chart
+	attr_accessor :song_name, :artist, :current_rank, :previous_rank, :peak_rank, :weeks_on_chart, :category
 
 	@@all = []
 
@@ -33,7 +33,7 @@ class Song
 		song.previous_rank = song_hash[:previous_rank]
 		song.peak_rank = song_hash[:peak_rank]
 		song.weeks_on_chart = song_hash[:weeks_on_chart]
-		# binding.pry
+		song.category = song_hash[:category]
 		song.artist.songs << song 
 		@@all << song 
 		song 
@@ -41,15 +41,6 @@ class Song
 
 	def self.find_or_create_by_hash(song_hash)
 		self.find_by_hash(song_hash) || self.create_by_hash(song_hash)
-	end 
-
-	def self.sort_artists_by_rank 
-		sorted_list = self.all.sort do |song_1, song_2|
-			song_1.current_rank.to_i <=> song_2.current_rank.to_i
-		end 
-		sorted_list.each.with_index(1) do |song, i|
-			puts "#{i}. #{song.artist.name}"
-		end 
 	end 
 
 	def self.list_by_rank(range)
@@ -69,23 +60,20 @@ class Song
 		self.all.detect{|song| song.current_rank == rank}
 	end 
 
-	def self.song_details_by_rank(rank)
-		song = self.find_by_rank(rank)
-		puts "\n\n\n----- ##{song.current_rank} \"#{song.song_name}\" -----".colorize(:green).underline
-		puts "\nArtist: #{song.artist.name}"
-		puts "Rank This Week: #{song.current_rank}"
-		puts "Rank #{song.previous_rank}"
-		puts "Peak Rank on Chart: #{song.peak_rank}"
-		puts "Weeks On Top 100: #{song.weeks_on_chart}"
+	def details
+		puts "\n\n\n----- ##{self.current_rank} \"#{self.song_name}\" -----".colorize(:green).underline
+		puts "\nArtist: #{self.artist.name}"
+		puts "Rank This Week: #{self.current_rank}"
+		puts "Rank #{self.previous_rank}"
+		puts "Peak Rank on Chart: #{self.peak_rank}"
+		puts "Weeks On Top 100: #{self.weeks_on_chart}"
 		puts "\n----------------------------".colorize(:green)
-		song
 	end 
 
-	def self.artist_songs(rank)
-		song = self.find_by_rank(rank)
+	def artist_songs
 		puts "\n------------------------------------------------\n".colorize(:green)
-		puts "#{song.artist.name}".colorize(:green) + " has " + "#{song.artist.songs.length}".colorize(:red) + " Song(s) on " + "#{CLI.category}:".colorize(:green)
-		song.artist.songs.each do |song|
+		puts "#{self.artist.name}".colorize(:green) + " has " + "#{self.artist.songs.length}".colorize(:red) + " Song(s) on " + "#{self.category}:".colorize(:green)
+		self.artist.songs.each do |song|
 			puts "\n\"#{song.song_name}\"".underline + ", which is currently" + " ##{song.current_rank}.".colorize(:green) 
 		end 
 		puts "\n------------------------------------------------\n".colorize(:green)
