@@ -4,6 +4,8 @@ class Scraper
 	def self.scrape_top_songs(url)
 
 		@all = []
+		# category = Nokogiri::HTML(open("https://www.billboard.com/charts/hot-100")).search("div.chart-header-headline img.chart-name-image-main").attr("alt").value
+
 
 		doc = Nokogiri::HTML(open(url)).search(".chart-data article.chart-row")
 

@@ -19,7 +19,6 @@ class Song
 		songs_array.each do |song_hash|
 			self.find_or_create_by_hash(song_hash)
 		end 
-		# binding.pry
 	end 
 
 	def self.find_by_hash(song_hash)
