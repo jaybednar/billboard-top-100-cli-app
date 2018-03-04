@@ -5,7 +5,7 @@ class CLI
 
 		input = nil  
 
-		puts "\n\n\n--- Billboard Top Songs As Of #{Time.now.month}/#{Time.now.day}/#{Time.now.year} ---"
+		puts "\n\n\n--- Billboard Top Songs As Of #{Time.now.month}/#{Time.now.day}/#{Time.now.year} ---".colorize(:green)
 
 		until input == 'exit' do
 			Song.reset!
@@ -17,17 +17,17 @@ class CLI
 			puts "\nMain Menu"
 			puts "----------".colorize(:green)
 			puts "Choose Category:"
-			puts "\n1. Billboard Hot 100"
-			puts "2. Mainstream Top 40"
-			puts "3. Today's Top Country"
-			puts "4. Today's Top Rock"
-			puts "5. Today's Top R&B/Hip-Hop"
-			puts "6. Today's Top Dance/Electronic"
-			puts "7. Today's Top Latin"
-			puts "8. Today's Top Christian/Gospel"
-			puts "9. Greatest Holiday Top 100"
-			puts "10. Greatest All Time Hot 100"
-			puts "\nEnter 'exit' to quit the program"
+			puts "\n1.".colorize(:green) + " Billboard Hot 100"
+			puts "2.".colorize(:green) + " Mainstream Top 40"
+			puts "3.".colorize(:green) + " Today's Top Country"
+			puts "4.".colorize(:green) + " Today's Top Rock"
+			puts "5.".colorize(:green) + " Today's Top R&B/Hip-Hop"
+			puts "6.".colorize(:green) + " Today's Top Dance/Electronic"
+			puts "7.".colorize(:green) + " Today's Top Latin"
+			puts "8.".colorize(:green) + " Today's Top Christian/Gospel"
+			puts "9.".colorize(:green) + " Greatest Holiday Top 100"
+			puts "10.".colorize(:green) + " Greatest All Time Hot 100"
+			puts "\nEnter " + "'exit'".colorize(:green) + " to quit the program"
 
 			input = gets.strip.downcase 
 
