@@ -1,8 +1,6 @@
 # BillboardTop100
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/billboard_top_100`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Welcome to the BillboardTop100 gem!  This gem allows you to pull the top songs in the 10 most popular charts such as "The Hot 100", Top Pop Song, Top Country Songs, etc.  You will find the lists of all categories, and be able to pull details of each song such as how many weeks the song has been on the chart, and see if and artist has any more songs on that chart.  
 
 ## Installation
 
@@ -22,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ billboard-top-100
 
 ## Development
 
