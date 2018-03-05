@@ -15,22 +15,12 @@ class CLI
 			puts "----------".colorize(:green)
 			puts "Choose Category:"
 			self.scraper.scrape_categories 
-			# puts "\n1.".colorize(:green) + " Billboard Hot 100"
-			# puts "2.".colorize(:green) + " Mainstream Top 40"
-			# puts "3.".colorize(:green) + " Today's Top Country"
-			# puts "4.".colorize(:green) + " Today's Top Rock"
-			# puts "5.".colorize(:green) + " Today's Top R&B/Hip-Hop"
-			# puts "6.".colorize(:green) + " Today's Top Dance/Electronic"
-			# puts "7.".colorize(:green) + " Today's Top Latin"
-			# puts "8.".colorize(:green) + " Today's Top Christian/Gospel"
-			# puts "9.".colorize(:green) + " Greatest Holiday Top 100"
-			# puts "10.".colorize(:green) + " Greatest All Time Hot 100"
 			puts "\nEnter " + "'exit'".colorize(:green) + " to quit the program"
 
 			input = gets.strip.downcase 
 
 			if (1..10).include?(input.to_i) 
-				self.set(input)
+				self.scraper.scrape_top_songs(input)
 				self.get_songs 
 			elsif input != 'exit' 
 				puts "Invalid Entry".colorize(:red)
@@ -120,31 +110,6 @@ class CLI
 		else 
 			puts "Invalid Entry".colorize(:red)
 			self.get_artist_songs(song)
-		end 
-	end 
-
-	def set(input)
-		case input 
-		when '1'
-			self.scraper.scrape_top_songs("hot-100")
-		when '2'
-			self.scraper.scrape_top_songs("pop-songs")
-		when '3'
-			self.scraper.scrape_top_songs("country-songs")
-		when '4'
-			self.scraper.scrape_top_songs("rock-songs")
-		when '5'
-			self.scraper.scrape_top_songs("r-b-hip-hop-songs")
-		when '6'
-			self.scraper.scrape_top_songs("dance-electronic-songs")
-		when '7'
-			self.scraper.scrape_top_songs("latin-songs")
-		when '8'
-			self.scraper.scrape_top_songs("christian-songs")
-		when '9'
-			self.scraper.scrape_top_songs("hot-holiday-songs")
-		when '10'
-			self.scraper.scrape_top_songs("greatest-hot-100-singles")
 		end 
 	end 
 
