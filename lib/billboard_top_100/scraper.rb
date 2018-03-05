@@ -3,8 +3,17 @@ class Scraper
 
 	def scrape_categories
 		@@categories.each.with_index(1) do |slug, i|
-			category = slug.gsub("-", " ").upcase
-			puts "#{i}. ".colorize(:green) + "#{category}"
+			if slug == "r-b-hip-hop-songs" 
+				category = "R&B/HIP-HOP SONGS"
+			else 
+				category = slug.gsub("-", " ").upcase
+			end 
+			if (1..9).include?(i)
+				puts "#{i}. ".colorize(:green) + " #{category}"
+			else 
+				puts "#{i}. ".colorize(:green) + "#{category}"
+			end 
+
 		end 
 	end 
 
@@ -24,7 +33,11 @@ class Scraper
 			song_hash[:artist] =  song.search(".chart-row__artist").text.gsub("\n", "")
 			song_hash[:weeks_on_chart] = song.search(".chart-row__weeks-on-chart span.chart-row__value").text
 			song_hash[:peak_rank] = song.search(".chart-row__top-spot span.chart-row__value").text
-			song_hash[:category] = @@categories[cat_index].gsub("-", " ").upcase
+			if @@categories[cat_index] == "r-b-hip-hop-songs" 
+				song_hash[:category] = "R&B/HIP-HOP SONGS"
+			else
+				song_hash[:category] = @@categories[cat_index].gsub("-", " ").upcase
+			end 
 			
 			@songs_array << song_hash
 		end 
