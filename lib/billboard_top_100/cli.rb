@@ -70,7 +70,7 @@ class CLI
 	end 
 
 	def get_song_details
-		puts "\nEnter " + "Song Number".colorize(:green) + " For More Information"
+		puts "\nEnter " + "Song Number".colorize(:green) + " For More Information\n\n"
 		self.get_input 
 		rank = gets.strip
 
