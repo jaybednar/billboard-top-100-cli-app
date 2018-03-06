@@ -50,7 +50,7 @@ class CLI
 		end 
 
 		puts "\n\n"
-		puts "Enter " + "'menu'".colorize(:green) + "to return to the main menu"
+		puts "Enter " + "'menu'".colorize(:green) + " to return to the main menu"
 		puts "Enter " + "'exit'".colorize(:green) + " to quit the program"
 		input = gets.strip
 
@@ -126,7 +126,7 @@ class CLI
 
 	def get_input 
 		puts "Enter " + "'back'".colorize(:green) + " to see more songs in this category"
-		puts "Enter " + "'menu'".colorize(:green) + "to return to the main menu"
+		puts "Enter " + "'menu'".colorize(:green) + " to return to the main menu"
 		puts "Enter " + "'exit'".colorize(:green) + " to quit the program"
 	end 
 end
