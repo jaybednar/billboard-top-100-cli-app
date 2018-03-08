@@ -22,7 +22,7 @@ class Song
 	end 
 
 	def self.find_by_hash(song_hash)
-		self.all.detect{|song| song.song_name == song_hash[:name]}
+		self.all.detect{|song| song.song_name == song_hash[:song_name]}
 	end 
 
 	def self.create_by_hash(song_hash)

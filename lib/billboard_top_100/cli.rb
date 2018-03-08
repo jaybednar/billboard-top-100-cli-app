@@ -14,7 +14,9 @@ class CLI
 			puts "\nMain Menu"
 			puts "----------".colorize(:green)
 			puts "Choose Category:"
+
 			self.scraper.scrape_categories 
+			
 			puts "\nEnter " + "'exit'".colorize(:green) + " to quit the program"
 
 			input = gets.strip.downcase 
@@ -54,15 +56,15 @@ class CLI
 		puts "Enter " + "'exit'".colorize(:green) + " to quit the program"
 		input = gets.strip
 
-		if input == 'menu' || input == 'back' || input == 'exit'
+		if input == 'menu' || input == 'exit'
 			self.handle_input(input)
 		elsif input.to_i >= entry || input.to_i == 0  
 			puts "Invalid Entry"
 			self.get_songs 
 		else 
-			range_end = input.to_i * 10 - 1
+			range_end = input.to_i * 10 
 			range_start = range_end - 9
-			rank_range = (num[range_start]..num[range_end])
+			rank_range = (range_start..range_end)
 			Song.list_by_rank(rank_range)
 			self.get_song_details
 		end 
