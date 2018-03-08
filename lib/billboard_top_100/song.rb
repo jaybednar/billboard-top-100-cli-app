@@ -47,9 +47,9 @@ class Song
 		puts ""
 		puts "-------------------------------------------------------------------------".colorize(:green)
 		songs_in_range = self.all.select{|song| range.include?(song.current_rank.to_i)}
-		self.all.each.with_index(1) do |song, i|
+		self.all.each do |song|
 			if songs_in_range.include?(song)
-				puts "#{i}. " + "#{song.artist.name}".colorize(:red) + " - " "\"#{song.song_name}\""
+				puts "#{song.current_rank}. " + "#{song.artist.name}".colorize(:red) + " - " "\"#{song.song_name}\""
 			else 
 			end 
 		end 
@@ -66,7 +66,7 @@ class Song
 		puts "Rank This Week: #{self.current_rank}"
 		puts "Rank #{self.previous_rank}"
 		puts "Peak Rank on Chart: #{self.peak_rank}"
-		puts "Weeks On Top 100: #{self.weeks_on_chart}"
+		puts "Weeks On #{self.category} chart: #{self.weeks_on_chart}"
 		puts "\n----------------------------".colorize(:green)
 	end 
 
